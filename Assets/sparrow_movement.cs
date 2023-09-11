@@ -68,7 +68,6 @@ public class sparrow_movement : MonoBehaviour
         // wasd movement
         Vector3 moveDirection = new Vector3(xDirection, 0.0f, zDirection);
         rb.position += moveDirection * speed/100;
-        Debug.Log("xDirection: " + xDirection);
         rb.transform.SetPositionAndRotation(rb.position, new Quaternion(0.0f, xDirection*2, 0.0f, 5.0f));
 
         // jumping movement
