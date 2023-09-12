@@ -752,8 +752,65 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sparrow: {fileID: 1945388264}
-  speed: 1
+  speed: 2
   animator: {fileID: 1945388266}
+  playerControls:
+    m_Name: Player Controls
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 47838daa-6c2f-4deb-bc8b-2a3564764554
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 3D Vector
+      m_Id: 17baf6de-9f4a-411b-ac09-ba19042e8684
+      m_Path: 3DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 71dbfb9d-b6aa-442d-8ba6-7f8f44d5ed01
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 8
+    - m_Name: left
+      m_Id: f39285c9-3dee-452d-8567-4c2752a1d59d
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 8
+    - m_Name: right
+      m_Id: 1d4bdf2c-d2ec-486d-8dfd-4dc65a603933
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 8
+    - m_Name: forward
+      m_Id: 1d108aaa-f583-4931-839d-564feed143e4
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 8
+    - m_Name: backward
+      m_Id: 7959b077-7531-4e4b-8c54-6cfdb930a10f
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Player Controls
+      m_Flags: 8
+    m_Flags: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

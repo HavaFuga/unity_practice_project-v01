@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 
 public class sparrow_movement : MonoBehaviour
@@ -10,44 +8,49 @@ public class sparrow_movement : MonoBehaviour
     public Rigidbody sparrow;
     public float speed;
     public Animator animator;
+    public InputAction playerControls;
     protected bool isJumping = false;
     protected float xDirection;
     protected float yDirection;
     protected float zDirection;
+    protected Vector3 moveDirection;
     
     void Start()
     {
         Debug.Log("Hello World! ^^");
-        Debug.Log(sparrow.position.x);
     }
 
     // Update is called once per frame
     void Update()
     {
-        xDirection = Input.GetAxis("Horizontal");
-        zDirection = Input.GetAxis("Vertical");
-        yDirection = Input.GetAxis("Jump");
+        moveDirection = playerControls.ReadValue<Vector3>();
         
-        
+        xDirection = moveDirection.x;
+        zDirection = moveDirection.z;
+        yDirection = moveDirection.y;
         
         animateObject(animator);
-        moveObject(sparrow);
+        moveObject();
     }
 
-    protected bool checkIsJumping()
+    private void OnEnable()
     {
-        return (sparrow.position.y > 1.0) ? true : false;
+        playerControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Disable();
     }
 
     void animateObject(Animator a)
     {
-        
         // animate jumping
-        if (yDirection != 0)
+        if (sparrow.position.y >= 1)
         {
             a.SetBool("isJumping", true);
         }
-        else if (yDirection == 0 && !checkIsJumping())
+        else if (sparrow.position.y < 1)
         {
             a.SetBool("isJumping", false);
         }
@@ -63,15 +66,14 @@ public class sparrow_movement : MonoBehaviour
         }
     }
     
-    void moveObject(Rigidbody rb)
+    void moveObject()
     {
         // wasd movement
-        Vector3 moveDirection = new Vector3(xDirection, 0.0f, zDirection);
-        rb.position += moveDirection * speed/100;
-        rb.transform.SetPositionAndRotation(rb.position, new Quaternion(0.0f, xDirection*2, 0.0f, 5.0f));
-
+        sparrow.velocity = new Vector3(xDirection * speed, sparrow.velocity.y, zDirection * speed);
+        sparrow.transform.SetPositionAndRotation(sparrow.position, new Quaternion(0.0f, xDirection*2, 0.0f, 5.0f));
+        
         // jumping movement
-        if (Input.GetKeyDown(KeyCode.Space) && checkIsJumping() == false)
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && sparrow.position.y > 1.0 == false)
         {
             sparrow.AddForce(Vector3.up * 400);
         }
