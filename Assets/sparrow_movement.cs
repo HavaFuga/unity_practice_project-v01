@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,19 +10,23 @@ public class sparrow_movement : MonoBehaviour
     public float speed;
     public Animator animator;
     public InputAction playerControls;
+    public Transform camera;
+    public float smothness;
     protected bool isJumping = false;
     protected float xDirection;
     protected float yDirection;
     protected float zDirection;
     protected Vector3 moveDirection;
+    protected float currentVelocity;
+    protected Vector2 direction;
     
     void Start()
     {
         Debug.Log("Hello World! ^^");
     }
-
+    
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         moveDirection = playerControls.ReadValue<Vector3>();
         
@@ -68,15 +73,15 @@ public class sparrow_movement : MonoBehaviour
     
     void moveObject()
     {
-        // wasd movement
-        sparrow.velocity = new Vector3(xDirection * speed, sparrow.velocity.y, zDirection * speed);
-        sparrow.transform.SetPositionAndRotation(sparrow.position, new Quaternion(0.0f, xDirection*2, 0.0f, 5.0f));
         
         // jumping movement
-        if (Keyboard.current.spaceKey.wasPressedThisFrame && sparrow.position.y > 1.0 == false)
+        if (Keyboard.current.spaceKey.isPressed && sparrow.position.y > 1.0 == false)
         {
-            sparrow.AddForce(Vector3.up * 400);
+            sparrow.AddForce(Vector3.up * 40);
         }
+        
+        // walking movement
+        transform.position += Time.fixedDeltaTime * new Vector3(moveDirection.x, 0, moveDirection.z) * speed;
     }
     
 }

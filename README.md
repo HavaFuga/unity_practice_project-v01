@@ -17,7 +17,7 @@ During the development of this project, I focused on the following key areas:
 
 ## Open ToDo's
 - [x] use [Input System](https://docs.unity3d.com/Packages/com.unity.inputsystem@1.7/manual/index.html)
-- [ ] add [Track Asset](https://assetstore.unity.com/packages/3d/environments/roadways/modular-lowpoly-track-roads-free-205188)
+- [x] add [Track Asset](https://assetstore.unity.com/packages/3d/environments/roadways/modular-lowpoly-track-roads-free-205188)
 - [ ] camera follows object with SmoothDamp
 - [ ] check if object passed all checkpoints
 - [ ] set Key-Map to reset object to last passed checkpoint
