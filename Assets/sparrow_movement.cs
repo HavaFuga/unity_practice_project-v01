@@ -8,6 +8,7 @@ public class sparrow_movement : MonoBehaviour
     // Start is called before the first frame update
     public Rigidbody sparrow;
     public float speed;
+    public float rotationSpeed;
     public Animator animator;
     public InputAction playerControls;
     public Transform camera;
@@ -30,9 +31,9 @@ public class sparrow_movement : MonoBehaviour
     {
         moveDirection = playerControls.ReadValue<Vector3>();
         
-        xDirection = moveDirection.x;
-        zDirection = moveDirection.z;
-        yDirection = moveDirection.y;
+        xDirection = moveDirection.normalized.x;
+        zDirection = moveDirection.normalized.z;
+        yDirection = moveDirection.normalized.y;
         
         animateObject(animator);
         moveObject();
@@ -71,17 +72,50 @@ public class sparrow_movement : MonoBehaviour
         }
     }
     
+    // private Vector3 _offset = new Vector3(0, 2, -3.5f);
     void moveObject()
     {
-        
+
         // jumping movement
         if (Keyboard.current.spaceKey.isPressed && sparrow.position.y > 1.0 == false)
         {
             sparrow.AddForce(Vector3.up * 40);
         }
+
+        sparrow.transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+
+        // if (moveDirection != Vector3.zero)
+        // {
+        //     sparrow.transform.forward = moveDirection;
+        //     Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+        //     sparrow.transform.rotation =
+        //         Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        // }
+        
+        float targetAngle = Mathf.Atan2(xDirection, zDirection) * Mathf.Rad2Deg + camera.eulerAngles.y;
+        float angle =
+            Mathf.SmoothDampAngle(sparrow.transform.eulerAngles.y, targetAngle, ref currentVelocity, smothness);
+        if (moveDirection.x != 0 && moveDirection.z >= 0)
+        {
+            sparrow.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            sparrow.transform.forward = moveDirection;
+        }
+        
+        if (moveDirection.z > 0)
+        {
+            sparrow.transform.position += new Vector3(0, 0, moveDirection.z + sparrow.rotation.y) * speed;
+            sparrow.transform.position += sparrow.transform.TransformDirection();
+        }
+        
+        // var currentPos = transform.position;
+        // var targetPos = _cart.transform.position 
+        //                 + _cart.transform.TransformDirection(_offset);
+        // transform.position = Vector3.SmoothDamp(currentPos, targetPos, 
+        //     ref _velocity, smoothTime);
         
         // walking movement
-        transform.position += Time.fixedDeltaTime * new Vector3(moveDirection.x, 0, moveDirection.z) * speed;
+        Debug.Log("moveDirection.x: " + moveDirection.x);
+        Debug.Log("moveDirection.z: " + moveDirection.z);
     }
     
 }
