@@ -317,7 +317,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427803868}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
   m_Name: 
@@ -837,6 +837,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -925,7 +926,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -952,6 +953,22 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ea10b14673a5a54e848f6d7d7b455de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sparrow: {fileID: 1945388264}
+  _offset: {x: 0, y: 3, z: -5}
+  smoothTime: 0.3
+  _rotationSpeed: 1
 --- !u!1001 &1059257215
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1612,6 +1629,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sparrow: {fileID: 1945388264}
   speed: 2
+  jumpForce: 40
+  rotationSpeed: 0
   animator: {fileID: 1945388266}
   playerControls:
     m_Name: Player Controls

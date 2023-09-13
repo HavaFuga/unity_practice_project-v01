@@ -8,6 +8,7 @@ public class sparrow_movement : MonoBehaviour
     // Start is called before the first frame update
     public Rigidbody sparrow;
     public float speed;
+    public float jumpForce = 0.5f;
     public float rotationSpeed;
     public Animator animator;
     public InputAction playerControls;
@@ -79,43 +80,21 @@ public class sparrow_movement : MonoBehaviour
         // jumping movement
         if (Keyboard.current.spaceKey.isPressed && sparrow.position.y > 1.0 == false)
         {
-            sparrow.AddForce(Vector3.up * 40);
+            sparrow.AddForce(Vector3.up * jumpForce);
         }
-
-        sparrow.transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
-
-        // if (moveDirection != Vector3.zero)
-        // {
-        //     sparrow.transform.forward = moveDirection;
-        //     Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-        //     sparrow.transform.rotation =
-        //         Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
-        // }
-        
-        float targetAngle = Mathf.Atan2(xDirection, zDirection) * Mathf.Rad2Deg + camera.eulerAngles.y;
-        float angle =
-            Mathf.SmoothDampAngle(sparrow.transform.eulerAngles.y, targetAngle, ref currentVelocity, smothness);
-        if (moveDirection.x != 0 && moveDirection.z >= 0)
-        {
-            sparrow.transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            sparrow.transform.forward = moveDirection;
-        }
-        
-        if (moveDirection.z > 0)
-        {
-            sparrow.transform.position += new Vector3(0, 0, moveDirection.z + sparrow.rotation.y) * speed;
-            sparrow.transform.position += sparrow.transform.TransformDirection();
-        }
-        
-        // var currentPos = transform.position;
-        // var targetPos = _cart.transform.position 
-        //                 + _cart.transform.TransformDirection(_offset);
-        // transform.position = Vector3.SmoothDamp(currentPos, targetPos, 
-        //     ref _velocity, smoothTime);
         
         // walking movement
-        Debug.Log("moveDirection.x: " + moveDirection.x);
-        Debug.Log("moveDirection.z: " + moveDirection.z);
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * zDirection);
+        transform.Translate(Vector3.right * Time.deltaTime * speed * xDirection);
+        
+
+        // rotation movement
+        // .atan2() returns angle, so rad2deg needed to convert into deg
+        var targetAngle = Mathf.Atan2(xDirection, zDirection) * Mathf.Rad2Deg;
+        var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref currentVelocity, smothness);
+        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+        
+        
     }
     
 }
